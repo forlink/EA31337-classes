@@ -80,7 +80,7 @@ public:
   /**
    * Inserts value using hashless key.
    */
-  void Push(const V value)
+  void Push(const V &value)
   {
     InsertInto(_slots_ref.slots, value);
     ++_num_used;
@@ -89,7 +89,7 @@ public:
   /**
    * Inserts or replaces value for a given key.
    */
-  void Set(const K key, V value)
+  void Set(const K key, const V &value)
   {
     InsertInto(_slots_ref.slots, key, value);
     ++_num_used;
@@ -222,7 +222,7 @@ protected:
   /**
    * Inserts value into given array of slots.
    */
-  void InsertInto(Slot<K, V>& slots[], const K key, const V value)
+  void InsertInto(Slot<K, V>& slots[], const K key, const V &value)
   {
     if (_num_used == ArraySize(slots)) {
       // No slots available, we need to expand array of slots (by 25%).
@@ -247,7 +247,7 @@ protected:
   /**
    * Inserts hashless value into given array of slots.
    */
-  void InsertInto(Slot<K, V>& slots[], const V value)
+  void InsertInto(Slot<K, V>& slots[], const V &value)
   {
     if (_num_used == ArraySize(slots)) {
       // No slots available, we need to expand array of slots (by 25%).
@@ -313,7 +313,7 @@ private:
    * Hashing function for ulong type.
    */
   uint Hash(ulong x) {
-    return x;
+    return (uint) x;
   }
 
   /**
