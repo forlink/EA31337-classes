@@ -29,6 +29,7 @@ class Trade;
 #include "Account.mqh"
 #include "Chart.mqh"
 #include "Convert.mqh"
+#include "Dict.mqh"
 #include "Object.mqh"
 
 /**
@@ -67,6 +68,7 @@ class Trade {
 public:
 
   TradeParams trade_params;
+  Dict<ulong, Order> orders[];
 
   /**
    * Class constructor.

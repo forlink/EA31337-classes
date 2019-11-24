@@ -292,32 +292,39 @@ private:
    */
   template<typename X>
   uint Hash(const X& x) {
-    return x.hash();
+    return x.Hash();
   }
 
   /**
-   * Specialization of hashing function.
+   * Hashing function for string type.
    */
   uint Hash(string x) {
     return StringLen(x);
   }
 
   /**
-   * Specialization of hashing function.
+   * Hashing function for uint type.
    */
   uint Hash(uint x) {
     return x;
   }
 
   /**
-   * Specialization of hashing function.
+   * Hashing function for ulong type.
+   */
+  uint Hash(ulong x) {
+    return x;
+  }
+
+  /**
+   * Hashing function for int type.
    */
   uint Hash(int x) {
     return (uint)x;
   }
 
   /**
-   * Specialization of hashing function.
+   * Hashing function for float type.
    */
   uint Hash(float x) {
     return (uint) ((ulong) x * 10000 % 10000);
