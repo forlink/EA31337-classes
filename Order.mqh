@@ -158,14 +158,17 @@ struct OrderParams {
   color color_arrow;            // Color of the opening arrow on the chart.
   unsigned short refresh_rate;  // How often to refresh order values (in sec).
   ENUM_ORDER_CONDITION cond_close; // Close condition.
-  MqlParam cond_arg;               // Close condition argument.
+  MqlParam cond_args[];               // Close condition argument.
   // Special struct methods.
   void OrderParams() : dummy(false), color_arrow(clrNONE), refresh_rate(10){};
   void OrderParams(bool _dummy) : dummy(_dummy){};
   // Setters.
-  void SetConditionClose(ENUM_ORDER_CONDITION _cond, MqlParam &_arg) {
+  void SetConditionClose(ENUM_ORDER_CONDITION _cond, MqlParam &_args[]) {
     cond_close = _cond;
-    cond_arg = _arg;
+    ArrayResize(cond_args, ArraySize(_args));
+    for (int i = 0; ArraySize(_args); i++) {
+      cond_args[i] = _args[i];
+    }
   }
   void SetRefreshRate(unsigned short _value) { refresh_rate = _value; }
 };
@@ -1392,6 +1395,7 @@ class Order : public SymbolInfo {
     }
     odata.ResetError();
     if (!OrderSelect()) {
+      SetUserError(ERR_USER_ITEM_NOT_FOUND);
       return false;
     }
     odata.ResetError();
